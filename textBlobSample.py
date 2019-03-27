@@ -18,8 +18,12 @@ from textblob.classifiers import NaiveBayesClassifier
 with open('train.json', 'r') as fp:
     cl = NaiveBayesClassifier(fp, format="json")
 
-print("classify: This is an amazing library!")
-cl.classify("This is an amazing library!")
+# print("classify: This is an amazing library!")
+
+toClassify = input("classify: ")
+
+print(cl.classify(toClassify))
+
 
 prob_dist = cl.prob_classify("This one's a doozy.")
 
