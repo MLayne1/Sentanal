@@ -7,9 +7,8 @@ def train():
 
 	for line in trainingData:
 		values = line.split(", ")
-		for value in values:
-			value.strip("\n")
-			print(value)
+		values[1] = values[1].strip("\n")
+		print(values)
 
 def sentimentCheck(word):
     print("Token: " + word)
