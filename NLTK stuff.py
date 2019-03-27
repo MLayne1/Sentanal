@@ -9,11 +9,9 @@ def sentimentCheck(word):
     print("Token: " + word)
     print("Stemmed: " + stemmer.stem(word) + "\n")
 
-
 def test():
     sentence = str(input())
     tokens = nltk.word_tokenize(sentence)
-
 
     print("\nList of Tokens: ")
     print(tokens)
