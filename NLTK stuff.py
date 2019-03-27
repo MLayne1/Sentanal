@@ -14,8 +14,7 @@ def test():
     tokens = nltk.word_tokenize(sentence)
 
     print("\nList of Tokens: ")
-    print(tokens)
-    print()
+    print(str(tokens) + "\n")
 
     for token in tokens:
        sentimentCheck(token)
