@@ -25,8 +25,7 @@ def test():
     for token in tokens:
        sentimentCheck(token)
 
-test()
-
-print("\n\n\n")
+# Calls methods for testing them
+#test()
 
 train()
