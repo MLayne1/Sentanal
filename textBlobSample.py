@@ -18,9 +18,17 @@ train =[
 
 cl = NaiveBayesClassifier(train)
 
+print("classify: This is an amazing library!")
 cl.classify("This is an amazing library!")
 
 prob_dist = cl.prob_classify("This one's a doozy.")
-prob_dist.max()
-round(prob_dist.prob("pos"), 2)
-round(prob_dist.prob("neg"), 2)
+
+v = prob_dist.max()
+
+print(v)
+
+v = round(prob_dist.prob("pos"), 2)
+print(v)
+
+v = round(prob_dist.prob("neg"), 2)
+print(v)
