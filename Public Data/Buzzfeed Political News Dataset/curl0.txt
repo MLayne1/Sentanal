@@ -1,0 +1,3 @@
+
+curl -XPOST -H "Content-Type: application/json" -d '{"title":"Article title goes here","content":"The article content goes here","url":"http://www.bbc.co.uk/news/uk-39657382"}' "http://localhost:8080/fakebox/check"
+

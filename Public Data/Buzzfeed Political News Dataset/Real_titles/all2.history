@@ -1,0 +1,54 @@
+     1	21:57	pip install -U scikit-learn
+     4	12:31	mv mozilla.pdf /tmp
+     5	12:31	cd
+     6	12:31	cd Desktop/fake2
+     7	12:31	ls -lta
+     8	12:31	cd textblob
+    10	12:32	mv /tmp/mozilla.pdf textblob_NaiveBayesClassifier.pdf
+    17	12:54	vi test1b.json test1c.json
+    19	12:54	cp test1.json test1b.json
+    20	12:54	vi test1b.json
+    21	12:54	cp test1b.json test1c.json
+    22	12:54	vi test1c.json
+    25	12:55	cat test1.json
+    26	12:55	cat test1b.json
+    28	13:05	cp test1c.json test1c2.json
+    29	13:05	vi test1c2.json
+    30	13:05	cat test1c2.json
+    31	14:34	cat test1c.json
+    37	14:48	cd fake
+    39	14:48	cd GoProject/
+    41	14:48	cd ..
+    42	14:48	cd horne_data/
+    44	14:48	cd *r
+    46	14:48	cd Public\ Data/
+    49	14:48	cd Buzzfeed\ Political\ News\ Dataset/
+    52	14:48	ls Real_titles
+    53	14:48	cd Real_titles
+    56	14:49	cat 101_Real.txt
+    57	14:49	cat 102_Real.txt
+    58	14:49	pwd
+    60	14:49	ls | wc
+    61	14:49	ls
+    62	14:49	cat * | more
+    63	14:49	cat * > /tmp/t
+    64	14:49	vi /tmp
+    65	14:50	vi /tmp/t
+    67	14:50	mv /tmp/t all.txt
+    68	14:50	cat all.txt
+    69	14:52	awk '{printf("\"text\": \"%s\", \"label\": \"neg\"},\n",$0)}' all.txt
+    70	14:52	awk '{printf("{\"text\": \"%s\", \"label\": \"neg\"},\n",$0)}' all.txt
+    71	14:53	awk '{ printf("{\"text\": \"%s\", \"label\": \"neg\"},\n",$0) }' all.txt > pig
+    73	14:54	sed -e "s/^M//" all.txt > all2.txt
+    76	14:54	sed -e 's/^M//' all.txt > all2.txt
+    79	14:55	history >> pigma
+    80	14:55	vi pigma
+    81	14:55	mv pigma doit_all.csh
+    82	14:55	source doit_all.csh
+    84	14:55	vi all2.txt
+    85	14:56	awk '{ printf("{\"text\": \"%s\", \"label\": \"neg\"},\n",$0) }' all2.txt > pig
+    87	14:56	awk '{ printf("{\"text\": \"%s\", \"label\": \"pos\"},\n",$0) }' all2.txt > pig
+    88	14:56	vi pig
+    89	14:56	mv pig all2.json
+    90	14:56	ls -ltar
+    91	14:56	history > all2.history
