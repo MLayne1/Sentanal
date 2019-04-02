@@ -1,6 +1,6 @@
 import os
 
-path = 'C:/Users/ASUS/Desktop/Public Data/Buzzfeed Political News Dataset/Real'
+path = '.'
 
 if os.path.exists("real.json"):
     os.remove("real.json")
@@ -21,6 +21,7 @@ with open('real.json', encoding="utf8", mode='a') as the_file:
                 text = text.replace('\"', '\'')
                 text = text.replace("\\", ' ')
                 text = text.replace("/", ' ')
+                # text = text.encode('ascii', errors='ignore')
 
                 the_file.write(text)
 

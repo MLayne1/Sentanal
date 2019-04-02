@@ -1,6 +1,6 @@
 import os
 
-path = 'C:/Users/ASUS/Desktop/Public Data/Buzzfeed Political News Dataset/Fake'
+path = '.'
 
 if os.path.exists("fake.json"):
     os.remove("fake.json")
