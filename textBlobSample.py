@@ -15,15 +15,17 @@ from textblob.classifiers import NaiveBayesClassifier
 
 # cl = NaiveBayesClassifier(train)
 
-with open('train.json', 'r') as fp:
+print("Running!")
+
+with open('train.json', encoding='utf-8', mode='r') as fp:
     cl = NaiveBayesClassifier(fp, format="json")
 
-print("classify: This is an amazing library!")
+toClassify = input("classify: ")
 
-# toClassify = input("classify: ")
+print(cl.classify(toClassify))
 
-# print(cl.classify(toClassify))
 
+print("Done!!")
 
 # prob_dist = cl.prob_classify("This one's a doozy.")
 
