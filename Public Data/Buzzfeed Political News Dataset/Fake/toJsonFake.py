@@ -1,4 +1,5 @@
 import os
+import re
 
 path = '.'
 
@@ -16,11 +17,13 @@ with open('fake.json', encoding="utf8", mode='a') as the_file:
                 the_file.write("\t{ \"text\": \"")
                 
                 text = toRead.read()
-                text = text.replace('\n', ' ')
-                text = text.replace('\r', ' ')
-                text = text.replace('\"', '\'')
-                text = text.replace("\\", ' ')
-                text = text.replace("/", ' ')
+                # text = text.replace('\n', ' ')
+                # text = text.replace('\r', ' ')
+                # text = text.replace('\"', '\'')
+                # text = text.replace("\\", ' ')
+                # text = text.replace("/", ' ')
+                text = re.sub('[^a-zA-Z ]', ' ', text)
+                text = re.sub(' +', ' ', text)
 
                 the_file.write(text)
 

@@ -19,7 +19,6 @@ with open('real.json', encoding="utf8", mode='a') as the_file:
                 text = toRead.read()
                 text = re.sub('[^a-zA-Z ]', ' ', text)
                 text = re.sub(' +', ' ', text)
-                # text = text.encode('ascii', errors='ignore')
 
                 the_file.write(text)
 
