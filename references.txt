@@ -1,2 +1,5 @@
 References used:
-https://www.geeksforgeeks.org/removing-stop-words-nltk-python/
+
+(StopWords) https://www.geeksforgeeks.org/removing-stop-words-nltk-python/
+
+(TextBlob Sentiment Analysis) https://textblob.readthedocs.io/en/dev/classifiers.html
