@@ -1,36 +1,26 @@
 from textblob.classifiers import NaiveBayesClassifier
-
-# train =[
-#     ('I love this sandwich.', 'pos'),
-#     ('this is an amazing place!', 'pos'),
-#     ('I feel very good about these beers.', 'pos'),
-#     ('this is my best work.', 'pos'),
-#     ("what an awesome view", 'pos'),
-#     ('I do not like this restaurant', 'neg'),
-#     ('I am tired of this stuff.', 'neg'),
-#     ("I can't deal with this", 'neg'),
-#     ('he is my sworn enemy!', 'neg'),
-#     ('my boss is horrible.', 'neg')
-# ]
-
-# cl = NaiveBayesClassifier(train)
+from textblob import TextBlob
+import json
 
 print("Running!")
 
 with open('train.json', encoding='utf-8', mode='r') as train:
     cl = NaiveBayesClassifier(train, format="json")
+    print(cl.show_informative_features(10))
+
+with open('test.json', encoding='utf-8') as test:
+    articles = json.load(test)
+
+    print("to classify: " + str(len(articles)) )
+
+    count = 0
+    for article in articles:
+        count+=1
+        print(str(count) + " C:" + str(cl.classify(article['text'])) + " Label:" + article['label'])
 
 
-print(cl.show_informative_features(5))
-
-with open('test.json', encoding='utf-8', mode='r') as test:
-    print("accuracy: " + str(cl.accuracy(test, format="json")))
-
-
-# toClassify = input("classify: ")
-# print(cl.classify(toClassify))
-
-
+with open('test.json', encoding='utf-8') as x:
+    print("accuracy: " + str(cl.accuracy(x, format="json")))
 
 print("Done!!")
 
