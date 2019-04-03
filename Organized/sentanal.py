@@ -2,32 +2,44 @@ from textblob.classifiers import NaiveBayesClassifier
 from textblob import TextBlob
 import json
 
+__authors__= "Luis Hernandez, Matthew Layne, Jordan Jefferson"
+__version__ = "4.3.2019"
+
+"""
+Sentanal uses TextBlob NaiveBayesClassifier in order to detect fake news.
+Used as ref: https://textblob.readthedocs.io/en/dev/classifiers.html
+    "pos" = Real article
+    "neg" = Fake article
+"""
+
+
 print("Running!")
-
-
 # train textblob NaiveBayesClassifier
 with open('train.json', encoding='utf-8', mode='r') as train:
     cl = NaiveBayesClassifier(train, format="json")
     cl.show_informative_features(10)
 
-# classify each 
+# classify each article in the test data
 with open('test.json', encoding='utf-8') as test:
-    articles = json.load(test)
 
+    #load json to a json object
+    articles = json.load(test)
     print("to classify: " + str(len(articles)) )
 
+    # iterate through articles
     count = 0
-
     for article in articles:
         count+=1
         correct = str(cl.classify(article['text'])) == article['label']
         print(str(count) + " C:" + str(cl.classify(article['text'])) + " Label:" + article['label'] + (" correct" if correct else " wrong"))
 
-
+# compute accuracy
 with open('test.json', encoding='utf-8') as x:
     print("accuracy: " + str(cl.accuracy(x, format="json")))
 
 print("Done!!")
+
+
 
 # prob_dist = cl.prob_classify("This one's a doozy.")
 
