@@ -14,9 +14,11 @@ with open('test.json', encoding='utf-8') as test:
     print("to classify: " + str(len(articles)) )
 
     count = 0
+
     for article in articles:
         count+=1
-        print(str(count) + " C:" + str(cl.classify(article['text'])) + " Label:" + article['label'])
+        correct = str(cl.classify(article['text'])) == article['label']
+        print(str(count) + " C:" + str(cl.classify(article['text'])) + " Label:" + article['label'] + (" correct" if correct else " wrong"))
 
 
 with open('test.json', encoding='utf-8') as x:
