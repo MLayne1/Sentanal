@@ -1,0 +1,2 @@
+References used:
+https://www.geeksforgeeks.org/removing-stop-words-nltk-python/
