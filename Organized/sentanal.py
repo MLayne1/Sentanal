@@ -6,7 +6,7 @@ print("Running!")
 
 with open('train.json', encoding='utf-8', mode='r') as train:
     cl = NaiveBayesClassifier(train, format="json")
-    print(cl.show_informative_features(10))
+    cl.show_informative_features(10)
 
 with open('test.json', encoding='utf-8') as test:
     articles = json.load(test)
