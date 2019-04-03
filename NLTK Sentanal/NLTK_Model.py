@@ -11,3 +11,5 @@ This is a sentiment analyses model using the NLTK classifier
 Authors: Luis Hernandez, Jordan Jefferson, Matthew Layne
 """
 
+TrainingDocs
+TestingDocs
