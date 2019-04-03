@@ -4,10 +4,13 @@ import json
 
 print("Running!")
 
+
+# train textblob NaiveBayesClassifier
 with open('train.json', encoding='utf-8', mode='r') as train:
     cl = NaiveBayesClassifier(train, format="json")
     cl.show_informative_features(10)
 
+# classify each 
 with open('test.json', encoding='utf-8') as test:
     articles = json.load(test)
 
