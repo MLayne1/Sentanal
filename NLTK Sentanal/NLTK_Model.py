@@ -56,11 +56,11 @@ print(real[0])		# print tuple
 print(real[0][0])	# print wordTokens
 print(real[0][1])	# print label
 
-# Seed Random if desired
-random.seed(9245)
-# Shuffle the articles randomly
-random.shuffle(real)
-random.shuffle(fake)
+# # Seed Random if desired
+# random.seed(9245)
+# # Shuffle the articles randomly
+# random.shuffle(real)
+# random.shuffle(fake)
 
 # Choose set for training and testing
 trainReal = real[:50]
