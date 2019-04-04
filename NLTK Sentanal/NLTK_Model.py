@@ -36,6 +36,3 @@ print(len(trainFake))
 
 # FakeArticlesJson = json.load()
 # RealArticlesJson = json.load()
-
-
-
