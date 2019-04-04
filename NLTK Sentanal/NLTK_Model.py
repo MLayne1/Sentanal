@@ -6,6 +6,10 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem.snowball import EnglishStemmer
 
+from nltk.classify import NaiveBayesClassifier
+from nltk.sentiment import SentimentAnalyzer
+from nltk.sentiment.util import *
+
 """
 This is a sentiment analyses model using the NLTK classifier
 
@@ -38,16 +42,10 @@ for article in testArticlesJson:
 
 
 
-print("Length of real training set: " + str(len(trainReal)))
-print("Length of real test set: " + str(len(testReal)))
-print("Length of fake training set: " + str(len(trainFake)))
-print("Length of fake test set: " + str(len(testFake)))
-
-
-
-
-# FakeArticlesJson = json.load()
-# RealArticlesJson = json.load()
+print("Length of real training set: {0}".format(len(trainReal)))
+print("Length of real test set: {0}".format(len(testReal)))
+print("Length of fake training set: {0}".format(len(trainFake)))
+print("Length of fake test set: {0}".format(len(testFake)))
 
 
 
