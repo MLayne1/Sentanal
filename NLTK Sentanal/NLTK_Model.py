@@ -41,7 +41,7 @@ for article in testArticlesJson:
 print("Length of real training set: " + str(len(trainReal)))
 print("Length of real test set: " + str(len(testReal)))
 print("Length of fake training set: " + str(len(trainFake)))
-print("Length of fake training set: " + str(len(testFake)))
+print("Length of fake test set: " + str(len(testFake)))
 
 
 
