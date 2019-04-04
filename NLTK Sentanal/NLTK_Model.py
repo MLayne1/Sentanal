@@ -19,10 +19,9 @@ Authors: Luis Hernandez, Jordan Jefferson, Matthew Layne
 
 # Generates arrays of positive and degative labelled articles
 def generateArrays():
-
 	trainFile = open('.\\Data\\jsonFiles\\train.json') 
 	testFile = open('.\\Data\\jsonFiles\\test.json') 
-
+		
 	trainArticlesJson = json.load(trainFile)
 	testArticlesJson = json.load(testFile)
 
@@ -32,21 +31,30 @@ def generateArrays():
 
 	# Append pos and neg labelled articles to the appropriate array
 	for article in trainArticlesJson:
+		wordTokens = word_tokenize(article['text'])
+		label = article['label']
+		tup = (wordTokens, label)
 		if article['label'] == 'pos':
-			pos.append(article['text'])
+			pos.append(tup)
 		else:
-			neg.append(article['text'])
+			neg.append(tup)
 
 	for article in testArticlesJson:
+		wordTokens = word_tokenize(article['text'])
+		label = article['label']
+		tup = (wordTokens, label)
 		if article['label'] == 'pos':
 			pos.append(article['text'])
 		else:
 			neg.append(article['text'])
 	return pos, neg
-
-
+	
 
 real, fake = generateArrays()
+
+print(real[0])		# print tuple
+print(real[0][0])	# print wordTokens
+print(real[0][1])	# print label
 
 # Seed Random if desired
 random.seed(9245)
@@ -59,6 +67,13 @@ trainReal = real[:50]
 trainFake = fake[:50]
 testReal = real[51:]
 testFake = fake[51:]
+
+# TODO: Looks like shuffle breaks the tupples?
+
+print(trainReal[0])		# print tuple
+print(trainReal[0][0])	# print wordTokens
+print(trainReal[0][1])	# print label
+
 
 print(len(real))
 print("Length of real training set: {0}".format(len(trainReal)))
