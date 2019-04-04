@@ -52,6 +52,7 @@ def generateArrays():
 
 real, fake = generateArrays()
 
+
 # print(real[0])		# print tuple
 # print(real[0][0])	# print wordTokens
 # print(real[0][1])	# print label
@@ -62,15 +63,17 @@ trainFake = fake[:50]
 testReal = real[51:]
 testFake = fake[51:]
 
-train = trainReal + trainFake
-test = testReal + testFake
+train = trainReal+trainFake
+test = testReal+testFake
+
+print(type(train))
+print(type(train[0]))
+print(type(train[0][0]))
+print(type(train[0][1]))
 
 sentanal = SentimentAnalyzer()
- 
-all_words_neg  = sentanal.all_words([mark_negation(doc) for doc in train])
-
-unigram_feats =  sentanal.unigram_word_feats(all_words_neg , min_freq=3)
-
+all_words_neg = sentanal.all_words(train[0], False)
+unigram_feats = sentanal.unigram_word_feats(all_words_neg, min_freq=4)
 print(len(unigram_feats))
 
 # # Seed Random if desired
