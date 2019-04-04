@@ -21,6 +21,7 @@ Authors: Luis Hernandez, Jordan Jefferson, Matthew Layne
 def generateArrays():
 	trainFile = open('.\\Data\\jsonFiles\\train.json') 
 	testFile = open('.\\Data\\jsonFiles\\test.json') 
+		
 	trainArticlesJson = json.load(trainFile)
 	testArticlesJson = json.load(testFile)
 
