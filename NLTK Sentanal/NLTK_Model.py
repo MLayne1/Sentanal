@@ -37,7 +37,6 @@ def generateArrays():
 			pos.append(tup)
 		else:
 			neg.append(tup)
-
 	for article in testArticlesJson:
 		wordTokens = word_tokenize(article['text'])
 		label = article['label']
@@ -46,7 +45,7 @@ def generateArrays():
 			pos.append(article['text'])
 		else:
 			neg.append(article['text']
-		return pos, neg
+	return pos, neg
 	
 
 real, fake = generateArrays()
