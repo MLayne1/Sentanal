@@ -17,34 +17,37 @@ This is a sentiment analyses model using the NLTK classifier
 Authors: Luis Hernandez, Jordan Jefferson, Matthew Layne
 """
 
-trainFile = open('.\\Data\\jsonFiles\\train.json') 
-testFile = open('.\\Data\\jsonFiles\\test.json') 
+# Generates arrays of positive and degative labelled articles
+def generateArrays():
+	trainFile = open('.\\Data\\jsonFiles\\train.json') 
+	testFile = open('.\\Data\\jsonFiles\\test.json') 
+	trainArticlesJson = json.load(trainFile)
+	testArticlesJson = json.load(testFile)
 
-trainArticlesJson = json.load(trainFile)
-testArticlesJson = json.load(testFile)
+	# Create empty arrays to store articles in array format
+	pos = []
+	neg = []
 
-# Create empty arrays to store tuples in format ([wordTokens], 'label')
-real = []
-fake = []
+	# Append pos and neg labelled articles to the appropriate array
+	for article in trainArticlesJson:
+		wordTokens = word_tokenize(article['text'])
+		label = article['label']
+		tup = (wordTokens, label)
+		if article['label'] == 'pos':
+			pos.append(tup)
+		else:
+			neg.append(tup)
 
-# Append real and fake articles to the appropriate array
-for article in trainArticlesJson:
-	wordTokens = word_tokenize(article['text'])
-	label = article['label']
-	tup = (wordTokens, label)
-	if article['label'] == 'pos':
-		real.append(tup)
-	else:
-		fake.append(tup)
+	for article in testArticlesJson:
+		wordTokens = word_tokenize(article['text'])
+		label = article['label']
+		tup = (wordTokens, label)
+		if article['label'] == 'pos':
+			pos.append(article['text'])
+		else:
+			neg.append(article['text'])
 
-for article in testArticlesJson:
-	wordTokens = word_tokenize(article['text'])
-	label = article['label']
-	tup = (wordTokens, label)
-	if article['label'] == 'pos':
-		real.append(article['text'])
-	else:
-		fake.append(article['text'])
+real, fake = generateArrays()
 
 # Seed Random if desired
 random.seed(9245)
@@ -63,15 +66,3 @@ print("Length of real training set: {0}".format(len(trainReal)))
 print("Length of real test set: {0}".format(len(testReal)))
 print("Length of fake training set: {0}".format(len(trainFake)))
 print("Length of fake test set: {0}".format(len(testFake)))
-
-# Verify Proper seeding
-# testArr = [1,2,3,4,5,6,7,8,9]
-# print(testArr)
-# random.shuffle(testArr)
-# print(testArr)
-
-
-
-
-# FakeArticlesJson = json.load()
-# RealArticlesJson = json.load()
