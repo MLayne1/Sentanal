@@ -46,7 +46,7 @@ def generateArrays():
 
 
 
-real, fake = generateArrays();
+real, fake = generateArrays()
 
 # Seed Random if desired
 random.seed(9245)
