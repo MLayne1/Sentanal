@@ -45,7 +45,9 @@ def generateArrays():
 		if article['label'] == 'pos':
 			pos.append(article['text'])
 		else:
-			neg.append(article['text'])
+			neg.append(article['text']
+		return pos, neg
+	
 
 real, fake = generateArrays()
 
