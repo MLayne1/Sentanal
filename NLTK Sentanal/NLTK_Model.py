@@ -23,18 +23,24 @@ testFile = open('.\\Data\\jsonFiles\\test.json')
 trainArticlesJson = json.load(trainFile)
 testArticlesJson = json.load(testFile)
 
-# Create empty arrays to store articles in array format
+# Create empty arrays to store tuples in format ([wordTokens], 'label')
 real = []
 fake = []
 
 # Append real and fake articles to the appropriate array
 for article in trainArticlesJson:
+	wordTokens = word_tokenize(article['text'])
+	label = article['label']
+	tup = (wordTokens, label)
 	if article['label'] == 'pos':
-		real.append(article['text'])
+		real.append(tup)
 	else:
-		fake.append(article['text'])
+		fake.append(tup)
 
 for article in testArticlesJson:
+	wordTokens = word_tokenize(article['text'])
+	label = article['label']
+	tup = (wordTokens, label)
 	if article['label'] == 'pos':
 		real.append(article['text'])
 	else:
