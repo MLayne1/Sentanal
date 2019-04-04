@@ -52,15 +52,9 @@ def generateArrays():
 
 real, fake = generateArrays()
 
-print(real[0])		# print tuple
-print(real[0][0])	# print wordTokens
-print(real[0][1])	# print label
-
-# Seed Random if desired
-random.seed(9245)
-# Shuffle the articles randomly
-random.shuffle(real)
-random.shuffle(fake)
+# print(real[0])		# print tuple
+# print(real[0][0])	# print wordTokens
+# print(real[0][1])	# print label
 
 # Choose set for training and testing
 trainReal = real[:50]
@@ -68,11 +62,29 @@ trainFake = fake[:50]
 testReal = real[51:]
 testFake = fake[51:]
 
+train = trainReal + trainFake
+test = testReal + testFake
+
+sentanal = SentimentAnalyzer()
+ 
+all_words_neg  = sentanal.all_words([mark_negation(doc) for doc in train])
+
+unigram_feats =  sentanal.unigram_word_feats(all_words_neg , min_freq=3)
+
+print(len(unigram_feats))
+
+# # Seed Random if desired
+# random.seed(9245)
+# # Shuffle the articles randomly
+# random.shuffle(real)
+# random.shuffle(fake)
+
+
 # TODO: Looks like shuffle breaks the tupples?
 
-print(trainReal[0])		# print tuple
-print(trainReal[0][0])	# print wordTokens
-print(trainReal[0][1])	# print label
+# print(trainReal[0])		# print tuple
+# print(trainReal[0][0])	# print wordTokens
+# print(trainReal[0][1])	# print label
 
 
 print(len(real))
