@@ -46,6 +46,13 @@ random.seed(9245)
 random.shuffle(real)
 random.shuffle(fake)
 
+# Choose set for training and testing
+trainReal = real[:50]
+trainFake = fake[:50]
+testReal = real[51:]
+testFake = fake[51:]
+
+print(len(real))
 print("Length of real training set: {0}".format(len(trainReal)))
 print("Length of real test set: {0}".format(len(testReal)))
 print("Length of fake training set: {0}".format(len(trainFake)))
