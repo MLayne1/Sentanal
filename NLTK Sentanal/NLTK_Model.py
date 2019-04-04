@@ -52,6 +52,10 @@ def generateArrays():
 
 real, fake = generateArrays()
 
+print(real[0])		# print tuple
+print(real[0][0])	# print wordTokens
+print(real[0][1])	# print label
+
 # Seed Random if desired
 random.seed(9245)
 # Shuffle the articles randomly
@@ -63,6 +67,13 @@ trainReal = real[:50]
 trainFake = fake[:50]
 testReal = real[51:]
 testFake = fake[51:]
+
+# TODO: Looks like shuffle breaks the tupples?
+
+print(trainReal[0])		# print tuple
+print(trainReal[0][0])	# print wordTokens
+print(trainReal[0][1])	# print label
+
 
 print(len(real))
 print("Length of real training set: {0}".format(len(trainReal)))
