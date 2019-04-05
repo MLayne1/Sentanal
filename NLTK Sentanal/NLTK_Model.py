@@ -116,18 +116,16 @@ def runSentanal(train, test):
 
 	all_words_neg = sentanal.all_words([mark_negation(doc) for doc in train])
 	unigramFeats = sentanal.unigram_word_feats(all_words_neg, min_freq=4)
-	# print(len(unigramFeats))
-	# print(unigram_feats)
 	sentanal.add_feat_extractor(extract_unigram_feats, unigrams=unigramFeats)
 
 
 	trainList = sentanal.apply_features(train)
 	testList = sentanal.apply_features(test)
-
 	trainer = NaiveBayesClassifier.train
-	sentanal.train(trainer, trainList)
+	classifier = sentanal.train(trainer, trainList)
 
-	sentanal.
+	classifier.show_most_informative_features()
+	
 
 	# creates array for storing values
 	values = []
