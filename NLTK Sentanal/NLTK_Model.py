@@ -9,7 +9,9 @@ from nltk.stem.snowball import EnglishStemmer
 
 from nltk.classify import NaiveBayesClassifier
 from nltk.sentiment import SentimentAnalyzer
-from nltk.sentiment.util import *
+from nltk.sentiment.util import * #mark_negation, extract_unigram_feats, extract_bigram_feats
+from nltk.collocations import * # BigramAssocMeasures
+
 
 """
 This is a sentiment analyses model using the NLTK classifier
@@ -57,14 +59,6 @@ random.seed(9245)
 random.shuffle(real)
 random.shuffle(fake)
 
-# validate appropriate values
-# this was used to find my dumb parsing mistake
-# for doc in real:
-# 	print(type(doc))		# print tuple
-# 	print(type(doc[0]))	# print wordTokens
-# 	print(doc[1])	# print label
-
-
 # Separate lists 
 trainReal = real[:50]
 trainFake = fake[:50]
@@ -75,18 +69,21 @@ testFake = fake[51:]
 train = trainReal+trainFake
 test = testReal+testFake
 
-# print(type(train))
-# print(type(train[0]))
-# print(type(train[0][0]))
-# print(type(train[0][1]))
-
 sentanal = SentimentAnalyzer()
 
 all_words_neg = sentanal.all_words([mark_negation(doc) for doc in train])
-unigramFeats = sentanal.unigram_word_feats(all_words_neg, min_freq=4)
-# print(len(unigramFeats))
-# print(unigram_feats)
+unigramFeats = sentanal.unigram_word_feats(all_words_neg, min_freq=3)
+
+finder = BigramCollocationFinder.from_documents(train)
+
+bigramMeasures = nltk.collocations.BigramAssocMeasures()
+bigramFeats = sentanal.bigram_collocation_feats(all_words_neg, min_freq=3, assoc_measure=bigramMeasures.pmi)
+
+print(len(bigramFeats))
+print(bigramFeats)
+
 sentanal.add_feat_extractor(extract_unigram_feats, unigrams=unigramFeats)
+sentanal.add_feat_extractor(extract_bigram_feats, bigrams=bigramFeats)
 
 
 trainList = sentanal.apply_features(train)
