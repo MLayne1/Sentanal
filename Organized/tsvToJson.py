@@ -15,8 +15,8 @@ SRC_REAL = 'articles_real.tsv'
 SRC_FAKE = 'articles_fake.tsv'
 
 # output path
-OUT_REAL = 'jReal.json'
-OUT_FAKE = 'jFake.json'
+OUT_REAL = 'jRealRaw.json'
+OUT_FAKE = 'jFakeRaw.json'
 
 # labels
 LBL_REAL = 'pos'
@@ -102,5 +102,5 @@ out1 = jReal.to_json(OUT_REAL, orient='records')
 out2 = jFake.to_json(OUT_FAKE, orient='records')
 
 # clean output
-cleanJson(OUT_REAL)
-cleanJson(OUT_FAKE)
+# cleanJson(OUT_REAL)
+# cleanJson(OUT_FAKE)

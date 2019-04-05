@@ -2,11 +2,11 @@
 
 import json
 
-SRC_TRAIN = '.\\jsonFiles\\trainP.json'
-SRC_TEST = '.\\jsonFiles\\testP.json'
+SRC_TRAIN = '.\\train.json'
+SRC_TEST = '.\\test.json'
 
-OUT_FAKE = '.\\jsonFiles\\hFakeP.json'
-OUT_REAL = '.\\jsonFiles\\hRealP.json'
+OUT_FAKE = '.\\hFakeRaw.json'
+OUT_REAL = '.\\hRealRaw.json'
 
 
 def makeJsons(srcTest, srcTrain):

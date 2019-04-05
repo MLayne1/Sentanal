@@ -51,7 +51,7 @@ def clean(toClean):
     # for each token, stem token and then check if it is stop word.
     # adds token to the clean text if it is not a stop word.
     for token in tokens:
-        token = stemmer.stem(token)
+        # token = stemmer.stem(token)
         if token not in stopWords:
             clean = clean + (str(token) + " ")
 

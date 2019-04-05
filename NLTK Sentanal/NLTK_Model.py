@@ -24,8 +24,8 @@ SRC_REAL_SCRAPPED = '.\\Data\\jsonFiles\\jReal.json'
 SRC_FAKE_sCRAPPED = '.\\Data\\jsonFiles\\jFake.json'
 
 # Public Database Horne
-SRC_REAL_PUBLIC = '.\\Data\\jsonFiles\\hReal.json'
-SRC_FAKE_PUBLIC = '.\\Data\\jsonFiles\\hFake.json'
+SRC_REAL_PUBLIC = '.\\Data\\jsonFiles\\hRealP.json'
+SRC_FAKE_PUBLIC = '.\\Data\\jsonFiles\\hFakeP.json'
 
 def generateTupleList(path):
 	""" Given the source of a JSON file return a List of tuples
@@ -116,10 +116,10 @@ def runSentanal(train, test):
 	all_words_neg = sentanal.all_words([mark_negation(doc) for doc in train])
 
 	unigramFeats = sentanal.unigram_word_feats(all_words_neg, min_freq=4)
-	sentanal.add_feat_extractor(extract_unigram_feats, unigrams=unigramFeats, handle_negation=False)
+	sentanal.add_feat_extractor(extract_unigram_feats, unigrams=unigramFeats, handle_negation=True)
 
-	bigramFeats = sentanal.
-	sentanal.add_feat_extractor(extract_bigram_feats, bigrams=bigramFeats)
+	# bigramFeats = sentanal.
+	# sentanal.add_feat_extractor(extract_bigram_feats, bigrams=bigramFeats)
 
 	trainList = sentanal.apply_features(train)
 	testList = sentanal.apply_features(test)
