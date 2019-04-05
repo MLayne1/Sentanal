@@ -54,9 +54,9 @@ def generateArrays():
 
 # Allows user to set seed for shuffle
 def seedAndShuffle(seed, real, fake):
-	# Set Random's seed if desired
+	# Set Random's seed if desired - Comment out for "random" seed
 	# random.seed(seed)
-	# print("\nUsing seed: " + str(seed))
+	# print("\nUsing seed: {0}".format(seed))
 	# Shuffle the articles randomly
 	return random.shuffle(real), random.shuffle(fake)
 
@@ -127,4 +127,4 @@ def generateData(numOfRuns):
 	    print("\n\nRunning attempt {0} of {1}".format(x+1, numOfRuns))	
 	    main()
 
-generateData(3)
+generateData(1)
