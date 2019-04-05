@@ -63,7 +63,7 @@ def seedAndShuffle(seed, real, fake):
 # splits training and testing data based on a parameter
 def setSplit(split, real, fake):
 	# train using split as %
-	split = int(split*len(real))
+	split = int(split*len(fake))
 	# Separate lists 
 	trainReal = real[:split]
 	trainFake = fake[:split]
