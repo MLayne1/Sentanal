@@ -1,10 +1,3 @@
-from textblob.classifiers import NaiveBayesClassifier
-from textblob import TextBlob
-import json
-
-__authors__= "Luis Hernandez, Matthew Layne, Jordan Jefferson"
-__version__ = "4.3.2019"
-
 """
 Sentanal uses TextBlob NaiveBayesClassifier in order to detect fake news.
 Used as ref: https://textblob.readthedocs.io/en/dev/classifiers.html
@@ -12,15 +5,27 @@ Used as ref: https://textblob.readthedocs.io/en/dev/classifiers.html
     "neg" = Fake article
 """
 
+from textblob.classifiers import NaiveBayesClassifier
+from textblob import TextBlob
+import json
+
+__authors__= "Luis Hernandez, Matthew Layne, Jordan Jefferson"
+__version__ = "4.3.2019"
+
+# SRC_TRAIN = "..\\NLTK Sentanal\\Data\\jsonFiles\\train.json"
+# SRC_TEST = "..\\NLTK Sentanal\\Data\\jsonFiles\\test.json"
+
+SRC_TRAIN = ".\\train.json"
+SRC_TEST = ".\\test.json"
 
 print("Running!")
 # train textblob NaiveBayesClassifier
-with open('train.json', encoding='utf-8', mode='r') as train:
+with open(SRC_TRAIN, encoding='utf-8', mode='r') as train:
     cl = NaiveBayesClassifier(train, format="json")
     cl.show_informative_features(10)
 
 # classify each article in the test data
-with open('test.json', encoding='utf-8') as test:
+with open(SRC_TEST, encoding='utf-8') as test:
 
     #load json to a json object
     articles = json.load(test)
@@ -34,7 +39,7 @@ with open('test.json', encoding='utf-8') as test:
         print(str(count) + " C:" + str(cl.classify(article['text'])) + " Label:" + article['label'] + (" correct" if correct else " wrong"))
 
 # compute accuracy
-with open('test.json', encoding='utf-8') as x:
+with open(SRC_TEST, encoding='utf-8') as x:
     print("accuracy: " + str(cl.accuracy(x, format="json")))
 
 print("Done!!")

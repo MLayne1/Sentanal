@@ -2,8 +2,8 @@
 
 import json
 
-SRC_TRAIN = '.\\train.json'
-SRC_TEST = '.\\test.json'
+SRC_TRAIN = '.\\trainRaw.json'
+SRC_TEST = '.\\testRaw.json'
 
 OUT_FAKE = '.\\hFakeRaw.json'
 OUT_REAL = '.\\hRealRaw.json'
