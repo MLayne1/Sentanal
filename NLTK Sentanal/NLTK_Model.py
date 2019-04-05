@@ -80,9 +80,7 @@ def generateArrays():
 	return pos, neg
 
 def seedAndShuffle(seed, toShuffle):
-
 	#TODO: handle seed or rename to just shuffle
-
 	# Set Random's seed if desired
 	random.seed(seed)
 	# print("\nUsing seed: " + str(seed))
@@ -160,10 +158,19 @@ def mainRunner(seed):
 
 	train, test = setSplit(0.5, real, fake)
 	
+# Main with seed as parameter
+def mainRunner(seed, split):
+	real, fake = generateArrays()
+	seedAndShuffle(seed, real, fake) # Original: 9245
+	train, test = setSplit(split, real, fake) # first param is % to train with
 	runSentanal(train, test)
 
 def main():
-	mainRunner(9245)
+	mainRunner(9245, 0.8)
 
-for x in range(0, 1):
-	main()
+def generateData(numOfRuns):
+	for x in range(0, numOfRuns):
+	    print("\n\nRunning attempt {0} of {1}".format(x+1, numOfRuns))	
+	    main()
+
+generateData(10)
