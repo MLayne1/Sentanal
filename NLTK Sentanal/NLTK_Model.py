@@ -39,7 +39,6 @@ def generateTupleList(path):
 
 	with open(path) as jFile:
 		articlesJson = json.load(jFile)
-		print(len(articlesJson))
 	
 	for article in articlesJson:
 		wordTokens = word_tokenize(article['text'])
@@ -49,7 +48,7 @@ def generateTupleList(path):
 
 	return tupleList
 
-# def generateArrays():
+def generateArrays():
 	trainFile = open(SRC_TRAIN) 
 	testFile = open(SRC_TEST) 
 	trainArticlesJson = json.load(trainFile)
@@ -105,8 +104,10 @@ def setSplit(split, real, fake):
 	test = testReal+testFake
 
 	# Print info on split
-	print("\nLength of training set: = {0} real + {1} fake = {2}".format(len(trainReal),len(trainFake),len(train)))
-	print("Length of test set: = {0} real + {1} fake = {2}".format(len(testReal),len(testFake),len(test)) + "\n")
+	print("\n")
+	print("Total records: {0} train + {1} test = {2}".format(len(train),len(test), len(train)+len(test)))
+	print("Length of training set: {0} real + {1} fake = {2}".format(len(trainReal),len(trainFake),len(train)))
+	print("Length of test set: {0} real + {1} fake = {2}".format(len(testReal),len(testFake),len(test)) + "\n")
 
 	return train, test
 
@@ -126,6 +127,8 @@ def runSentanal(train, test):
 	trainer = NaiveBayesClassifier.train
 	sentanal.train(trainer, trainList)
 
+	sentanal.
+
 	# creates array for storing values
 	values = []
 
@@ -144,14 +147,17 @@ def mainRunner(seed):
 	# generate arrays is now obsolete
 	# real, fake = generateArrays()
 
+	real =  generateTupleList(SRC_REAL_PUBLIC)
+	fake =  generateTupleList(SRC_FAKE_PUBLIC)
+
+	# real =  generateTupleList(SRC_REAL_SCRAPPED) + generateTupleList(SRC_REAL_PUBLIC)
+	# fake =  generateTupleList(SRC_FAKE_sCRAPPED) + generateTupleList(SRC_FAKE_PUBLIC)
+
 	# real =  generateTupleList(SRC_REAL_SCRAPPED)
 	# fake =  generateTupleList(SRC_FAKE_sCRAPPED)
 
-	real =  generateTupleList(SRC_REAL_SCRAPPED)
-	fake =  generateTupleList(SRC_FAKE_PUBLIC)
-
-	seedAndShuffle(9245, real)
-	seedAndShuffle(9245, fake)
+	seedAndShuffle(seed, real)
+	seedAndShuffle(seed, fake)
 
 	train, test = setSplit(0.1, real, fake)
 	
