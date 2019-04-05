@@ -123,7 +123,6 @@ def runSentanal(train, test):
 	testList = sentanal.apply_features(test)
 	trainer = NaiveBayesClassifier.train
 	classifier = sentanal.train(trainer, trainList)
-
 	classifier.show_most_informative_features()
 	
 
@@ -145,14 +144,14 @@ def mainRunner(seed):
 	# generate arrays is now obsolete
 	# real, fake = generateArrays()
 
-	real =  generateTupleList(SRC_REAL_PUBLIC)
-	fake =  generateTupleList(SRC_FAKE_PUBLIC)
+	# real =  generateTupleList(SRC_REAL_PUBLIC)
+	# fake =  generateTupleList(SRC_FAKE_PUBLIC)
 
 	# real =  generateTupleList(SRC_REAL_SCRAPPED) + generateTupleList(SRC_REAL_PUBLIC)
 	# fake =  generateTupleList(SRC_FAKE_sCRAPPED) + generateTupleList(SRC_FAKE_PUBLIC)
 
-	# real =  generateTupleList(SRC_REAL_SCRAPPED)
-	# fake =  generateTupleList(SRC_FAKE_sCRAPPED)
+	real =  generateTupleList(SRC_REAL_SCRAPPED)
+	fake =  generateTupleList(SRC_FAKE_sCRAPPED)
 
 	seedAndShuffle(seed, real)
 	seedAndShuffle(seed, fake)
