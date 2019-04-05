@@ -127,4 +127,4 @@ def generateData(numOfRuns):
 	    print("\n\nRunning attempt {0} of {1}".format(x+1, numOfRuns))	
 	    main()
 
-generateData(1)
+generateData(100)
