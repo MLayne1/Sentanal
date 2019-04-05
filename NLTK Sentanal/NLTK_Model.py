@@ -122,7 +122,9 @@ def mainRunner(seed):
 def main():
 	mainRunner(9245)
 
-for x in range(0, 10):
-    print("Running iteration: " + str(x))	
-    main()
+def generateData(numOfRuns):
+	for x in range(0, numOfRuns):
+	    print("\n\nRunning attempt {0} of {1}".format(x+1, numOfRuns))	
+	    main()
 
+generateData(3)
