@@ -48,53 +48,57 @@ def generateArrays():
 		else:
 			neg.append(tup)
 	return pos, neg
-	
 
-real, fake = generateArrays()
-
-
-# Seed Random if desired
-random.seed(9245)
-# Shuffle the articles randomly
-random.shuffle(real)
-random.shuffle(fake)
-
-# Separate lists 
-trainReal = real[:50]
-trainFake = fake[:50]
-testReal = real[51:]
-testFake = fake[51:]
-
-# create training and testing list
-train = trainReal+trainFake
-test = testReal+testFake
-
-sentanal = SentimentAnalyzer()
-
-all_words_neg = sentanal.all_words([mark_negation(doc) for doc in train])
-unigramFeats = sentanal.unigram_word_feats(all_words_neg, min_freq=3)
-
-finder = BigramCollocationFinder.from_documents(train)
-
-bigramMeasures = nltk.collocations.BigramAssocMeasures()
-bigramFeats = sentanal.bigram_collocation_feats(all_words_neg, min_freq=3, assoc_measure=bigramMeasures.pmi)
-
-print(len(bigramFeats))
-print(bigramFeats)
-
-sentanal.add_feat_extractor(extract_unigram_feats, unigrams=unigramFeats)
-sentanal.add_feat_extractor(extract_bigram_feats, bigrams=bigramFeats)
+def seedAndShuffle(seed, real, fake):
+	# Set Random's seed if desired
+	random.seed(seed)
+	print("\nUsing seed: " + str(seed))
+	# Shuffle the articles randomly
+	return random.shuffle(real), random.shuffle(fake)
 
 
-trainList = sentanal.apply_features(train)
-testList = sentanal.apply_features(test)
+def setSplit(split, real, fake):
+	# Separate lists 
+	trainReal = real[:split]
+	trainFake = fake[:split]
+	testReal = real[(split+1):]
+	testFake = fake[(split+1):]
 
-trainer = NaiveBayesClassifier.train
-classifier = sentanal.train(trainer, trainList)
+	# create training and testing list
+	train = trainReal+trainFake
+	test = testReal+testFake
 
-# display results
-for key,value in sorted(sentanal.evaluate(testList).items()):
-	print('{0}: {1}'.format(key, value))
+	# Print info on split
 
-print("Length of training set: = {0} real + {1} fake = {2}".format(len(trainReal),len(trainFake),len(train)))
-print("Length of test set: = {0} real + {1} fake = {2}".format(len(testReal),len(testFake),len(test)))
+	print("\nLength of training set: = {0} real + {1} fake = {2}".format(len(trainReal),len(trainFake),len(train)))
+	print("Length of test set: = {0} real + {1} fake = {2}".format(len(testReal),len(testFake),len(test)) + "\n")
+
+	return train, test
+
+def runSentanal(train, test):
+	sentanal = SentimentAnalyzer()
+
+	all_words_neg = sentanal.all_words([mark_negation(doc) for doc in train])
+	unigramFeats = sentanal.unigram_word_feats(all_words_neg, min_freq=4)
+	# print(len(unigramFeats))
+	# print(unigram_feats)
+	sentanal.add_feat_extractor(extract_unigram_feats, unigrams=unigramFeats)
+
+
+	trainList = sentanal.apply_features(train)
+	testList = sentanal.apply_features(test)
+
+	trainer = NaiveBayesClassifier.train
+	classifier = sentanal.train(trainer, trainList)
+
+	# display results
+	for key,value in sorted(sentanal.evaluate(testList).items()):
+		print('{0}: {1}'.format(key, value))
+
+def main():
+	real, fake = generateArrays()
+	seedAndShuffle(9245, real, fake)
+	train, test = setSplit(50, real, fake)
+	runSentanal(train, test)
+
+main()
