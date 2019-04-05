@@ -19,8 +19,13 @@ __author__ = "Luis Hernandez, Jordan Jefferson, Matthew Layne"
 SRC_TRAIN = '.\\Data\\jsonFiles\\train.json'
 SRC_TEST = '.\\Data\\jsonFiles\\test.json'
 
-SRC_REAL = '.\\Data\\jsonFiles\\jReal.json'
-SRC_FAKE = '.\\Data\\jsonFiles\\jFake.json'
+# Data scrapped from the internet
+SRC_REAL_SCRAPPED = '.\\Data\\jsonFiles\\jReal.json'
+SRC_FAKE_sCRAPPED = '.\\Data\\jsonFiles\\jFake.json'
+
+# Public Database Horne
+SRC_REAL_PUBLIC = '.\\Data\\jsonFiles\\hReal.json'
+SRC_FAKE_PUBLIC = '.\\Data\\jsonFiles\\hFake.json'
 
 def generateTupleList(path):
 	""" Given the source of a JSON file return a List of tuples
@@ -44,7 +49,7 @@ def generateTupleList(path):
 
 	return tupleList
 
-def generateArrays():
+# def generateArrays():
 	trainFile = open(SRC_TRAIN) 
 	testFile = open(SRC_TEST) 
 	trainArticlesJson = json.load(trainFile)
@@ -136,10 +141,14 @@ def runSentanal(train, test):
 
 def mainRunner(seed):
 
+	# generate arrays is now obsolete
 	# real, fake = generateArrays()
 
-	real =  generateTupleList(SRC_REAL)
-	fake =  generateTupleList(SRC_FAKE)
+	# real =  generateTupleList(SRC_REAL_SCRAPPED)
+	# fake =  generateTupleList(SRC_FAKE_sCRAPPED)
+
+	real =  generateTupleList(SRC_REAL_SCRAPPED)
+	fake =  generateTupleList(SRC_FAKE_PUBLIC)
 
 	seedAndShuffle(9245, real)
 	seedAndShuffle(9245, fake)
@@ -151,5 +160,5 @@ def mainRunner(seed):
 def main():
 	mainRunner(9245)
 
-for x in range(0, 10):
+for x in range(0, 1):
 	main()

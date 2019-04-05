@@ -15,8 +15,8 @@ SRC_REAL = 'articles_real.tsv'
 SRC_FAKE = 'articles_fake.tsv'
 
 # output path
-OUT_REAL = 'jFake.json'
-OUT_FAKE = 'jReal.json'
+OUT_REAL = 'jReal.json'
+OUT_FAKE = 'jFake.json'
 
 # labels
 LBL_REAL = 'pos'
