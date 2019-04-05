@@ -41,7 +41,7 @@ def clean(toClean):
     toClean = toClean.lower()
 
     # remove non alphabetical chars and remove extra spaces
-    toClean = re.sub('[^a-z ]', ' ', toClean) # use [^a-zA-Z] if not forced lowercase
+    toClean = re.sub('[^a-z,.!?]', ' ', toClean) # use [^a-zA-Z] if not forced lowercase
     # Replaces sequential spaces with single space
     toClean = re.sub(' +', ' ', toClean)
 

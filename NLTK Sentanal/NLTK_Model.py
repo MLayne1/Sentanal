@@ -11,7 +11,7 @@ from nltk.tokenize import word_tokenize
 from nltk.stem.snowball import EnglishStemmer
 from nltk.classify import NaiveBayesClassifier
 from nltk.sentiment import SentimentAnalyzer
-from nltk.sentiment.util import mark_negation, extract_unigram_feats
+from nltk.sentiment.util import mark_negation, extract_unigram_feats, extract_bigram_feats
 
 __author__ = "Luis Hernandez, Jordan Jefferson, Matthew Layne"
 
@@ -45,7 +45,6 @@ def generateTupleList(path):
 		label = article['label']
 		tup = (wordTokens, label)
 		tupleList.append(tup)
-
 	return tupleList
 
 def generateArrays():
@@ -85,7 +84,7 @@ def seedAndShuffle(seed, toShuffle):
 	#TODO: handle seed or rename to just shuffle
 
 	# Set Random's seed if desired
-	# random.seed(seed)
+	random.seed(seed)
 	# print("\nUsing seed: " + str(seed))
 	# Shuffle the articles randomly
 	return random.shuffle(toShuffle)
@@ -115,9 +114,12 @@ def runSentanal(train, test):
 	sentanal = SentimentAnalyzer()
 
 	all_words_neg = sentanal.all_words([mark_negation(doc) for doc in train])
-	unigramFeats = sentanal.unigram_word_feats(all_words_neg, min_freq=4)
-	sentanal.add_feat_extractor(extract_unigram_feats, unigrams=unigramFeats)
 
+	unigramFeats = sentanal.unigram_word_feats(all_words_neg, min_freq=4)
+	sentanal.add_feat_extractor(extract_unigram_feats, unigrams=unigramFeats, handle_negation=False)
+
+	bigramFeats = sentanal.
+	sentanal.add_feat_extractor(extract_bigram_feats, bigrams=bigramFeats)
 
 	trainList = sentanal.apply_features(train)
 	testList = sentanal.apply_features(test)
@@ -144,19 +146,19 @@ def mainRunner(seed):
 	# generate arrays is now obsolete
 	# real, fake = generateArrays()
 
-	# real =  generateTupleList(SRC_REAL_PUBLIC)
-	# fake =  generateTupleList(SRC_FAKE_PUBLIC)
+	real =  generateTupleList(SRC_REAL_PUBLIC)
+	fake =  generateTupleList(SRC_FAKE_PUBLIC)
 
 	# real =  generateTupleList(SRC_REAL_SCRAPPED) + generateTupleList(SRC_REAL_PUBLIC)
 	# fake =  generateTupleList(SRC_FAKE_sCRAPPED) + generateTupleList(SRC_FAKE_PUBLIC)
 
-	real =  generateTupleList(SRC_REAL_SCRAPPED)
-	fake =  generateTupleList(SRC_FAKE_sCRAPPED)
+	# real =  generateTupleList(SRC_REAL_SCRAPPED)
+	# fake =  generateTupleList(SRC_FAKE_sCRAPPED)
 
 	seedAndShuffle(seed, real)
 	seedAndShuffle(seed, fake)
 
-	train, test = setSplit(0.1, real, fake)
+	train, test = setSplit(0.5, real, fake)
 	
 	runSentanal(train, test)
 
