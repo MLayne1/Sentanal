@@ -51,7 +51,6 @@ def generateArrays():
 real, fake = generateArrays()
 
 
-<<<<<<< HEAD
 # # Seed Random if desired
 # random.seed(9245)
 # # Shuffle the articles randomly
