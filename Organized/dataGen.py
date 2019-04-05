@@ -1,3 +1,7 @@
+"""Script that generates a training and testing JSON file 
+given some directories where each data point is a single .txt file
+"""
+
 import os
 import re
 import nltk
@@ -5,10 +9,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem.snowball import EnglishStemmer
 
-"""
-Script that generates a training and testing JSON file given some
-directories where each data point is a single .txt file
-"""
+__author__ = "Luis Hernandez, Jordan Jefferson, Matthew Layne"
 
 # paths to labeled data 
 pathTrainFake = '.\\FakeBuzzfeed'
@@ -51,7 +52,7 @@ def clean(toClean):
     # for each token, stem token and then check if it is stop word.
     # adds token to the clean text if it is not a stop word.
     for token in tokens:
-        # token = stemmer.stem(token)
+        token = stemmer.stem(token)
         if token not in stopWords:
             clean = clean + (str(token) + " ")
 

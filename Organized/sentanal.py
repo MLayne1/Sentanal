@@ -43,17 +43,3 @@ with open(SRC_TEST, encoding='utf-8') as x:
     print("accuracy: " + str(cl.accuracy(x, format="json")))
 
 print("Done!!")
-
-
-
-# prob_dist = cl.prob_classify("This one's a doozy.")
-
-# v = prob_dist.max()
-
-# print(v)
-
-# v = round(prob_dist.prob("pos"), 2)
-# print(v)
-
-# v = round(prob_dist.prob("neg"), 2)
-# print(v)

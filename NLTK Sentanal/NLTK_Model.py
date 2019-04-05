@@ -138,30 +138,17 @@ def runSentanal(train, test):
 	with open('Data\\sentanalResults.csv', mode='a') as csvFile:
 		writer = csv.writer(csvFile, delimiter=',')
 		writer.writerow(values)
-
-def mainRunner(seed):
-
+	
+# Main with seed as parameter
+def mainRunner(seed, split):
 	# generate arrays is now obsolete
 	# real, fake = generateArrays()
 
 	real =  generateTupleList(SRC_REAL_PUBLIC)
 	fake =  generateTupleList(SRC_FAKE_PUBLIC)
 
-	# real =  generateTupleList(SRC_REAL_SCRAPPED) + generateTupleList(SRC_REAL_PUBLIC)
-	# fake =  generateTupleList(SRC_FAKE_sCRAPPED) + generateTupleList(SRC_FAKE_PUBLIC)
-
-	# real =  generateTupleList(SRC_REAL_SCRAPPED)
-	# fake =  generateTupleList(SRC_FAKE_sCRAPPED)
-
 	seedAndShuffle(seed, real)
-	seedAndShuffle(seed, fake)
-
-	train, test = setSplit(0.5, real, fake)
-	
-# Main with seed as parameter
-def mainRunner(seed, split):
-	real, fake = generateArrays()
-	seedAndShuffle(seed, real, fake) # Original: 9245
+	seedAndShuffle(seed, fake) # Original: 9245
 	train, test = setSplit(split, real, fake) # first param is % to train with
 	runSentanal(train, test)
 
