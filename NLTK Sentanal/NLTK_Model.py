@@ -71,45 +71,32 @@ def setSplit(split, real, fake):
 	print("\nLength of training set: = {0} real + {1} fake = {2}".format(len(trainReal),len(trainFake),len(train)))
 	print("Length of test set: = {0} real + {1} fake = {2}".format(len(testReal),len(testFake),len(test)) + "\n")
 
-	return test, train
+	return train, test
+
+def runSentanal(train, test):
+	sentanal = SentimentAnalyzer()
+
+	all_words_neg = sentanal.all_words([mark_negation(doc) for doc in train])
+	unigramFeats = sentanal.unigram_word_feats(all_words_neg, min_freq=4)
+	# print(len(unigramFeats))
+	# print(unigram_feats)
+	sentanal.add_feat_extractor(extract_unigram_feats, unigrams=unigramFeats)
 
 
-real, fake = generateArrays()
-seedAndShuffle(9245, real, fake)
-test, train = setSplit(50, real, fake)
+	trainList = sentanal.apply_features(train)
+	testList = sentanal.apply_features(test)
 
-# Choose set for training and testing
+	trainer = NaiveBayesClassifier.train
+	classifier = sentanal.train(trainer, trainList)
 
-# validate appropriate values
-# this was used to find my dumb parsing mistake
-# for doc in real:
-# 	print(type(doc))		# print tuple
-# 	print(type(doc[0]))	# print wordTokens
-# 	print(doc[1])	# print label
+	# display results
+	for key,value in sorted(sentanal.evaluate(testList).items()):
+		print('{0}: {1}'.format(key, value))
 
+def main():
+	real, fake = generateArrays()
+	seedAndShuffle(9245, real, fake)
+	train, test = setSplit(50, real, fake)
+	runSentanal(train, test)
 
-
-
-# print(type(train))
-# print(type(train[0]))
-# print(type(train[0][0]))
-# print(type(train[0][1]))
-
-sentanal = SentimentAnalyzer()
-
-all_words_neg = sentanal.all_words([mark_negation(doc) for doc in train])
-unigramFeats = sentanal.unigram_word_feats(all_words_neg, min_freq=4)
-# print(len(unigramFeats))
-# print(unigram_feats)
-sentanal.add_feat_extractor(extract_unigram_feats, unigrams=unigramFeats)
-
-
-trainList = sentanal.apply_features(train)
-testList = sentanal.apply_features(test)
-
-trainer = NaiveBayesClassifier.train
-classifier = sentanal.train(trainer, trainList)
-
-# display results
-for key,value in sorted(sentanal.evaluate(testList).items()):
-	print('{0}: {1}'.format(key, value))
+main()
