@@ -46,28 +46,39 @@ def generateArrays():
 		else:
 			neg.append(tup)
 	return pos, neg
-	
+
+def seedAndShuffle(seed, real, fake):
+	# Set Random's seed if desired
+	random.seed(seed)
+	print("\nUsing seed: " + str(seed))
+	# Shuffle the articles randomly
+	return random.shuffle(real), random.shuffle(fake)
+
+
+def setSplit(split, real, fake):
+	# Separate lists 
+	trainReal = real[:split]
+	trainFake = fake[:split]
+	testReal = real[(split+1):]
+	testFake = fake[(split+1):]
+
+	# create training and testing list
+	train = trainReal+trainFake
+	test = testReal+testFake
+
+	# Print info on split
+
+	print("\nLength of training set: = {0} real + {1} fake = {2}".format(len(trainReal),len(trainFake),len(train)))
+	print("Length of test set: = {0} real + {1} fake = {2}".format(len(testReal),len(testFake),len(test)) + "\n")
+
+	return test, train
+
 
 real, fake = generateArrays()
-
-
-# # Seed Random if desired
-# random.seed(9245)
-# # Shuffle the articles randomly
-# random.shuffle(real)
-# random.shuffle(fake)
-
-# print(real[0])	# print tuple
-# print(real[0][0])	# print wordTokens
-# print(real[0][1])	# print label
+seedAndShuffle(9245, real, fake)
+test, train = setSplit(50, real, fake)
 
 # Choose set for training and testing
-
-# Seed Random if desired
-random.seed(9245)
-# Shuffle the articles randomly
-random.shuffle(real)
-random.shuffle(fake)
 
 # validate appropriate values
 # this was used to find my dumb parsing mistake
@@ -77,15 +88,7 @@ random.shuffle(fake)
 # 	print(doc[1])	# print label
 
 
-# Separate lists 
-trainReal = real[:50]
-trainFake = fake[:50]
-testReal = real[51:]
-testFake = fake[51:]
 
-# create training and testing list
-train = trainReal+trainFake
-test = testReal+testFake
 
 # print(type(train))
 # print(type(train[0]))
@@ -110,6 +113,3 @@ classifier = sentanal.train(trainer, trainList)
 # display results
 for key,value in sorted(sentanal.evaluate(testList).items()):
 	print('{0}: {1}'.format(key, value))
-
-print("Length of training set: = {0} real + {1} fake = {2}".format(len(trainReal),len(trainFake),len(train)))
-print("Length of test set: = {0} real + {1} fake = {2}".format(len(testReal),len(testFake),len(test)))
