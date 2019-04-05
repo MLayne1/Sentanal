@@ -123,4 +123,6 @@ def main():
 	mainRunner(9245)
 
 for x in range(0, 10):
-	main()
+    print("Running iteration: " + str(x))	
+    main()
+
