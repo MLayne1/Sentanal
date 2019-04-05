@@ -3,6 +3,7 @@
 import os
 import re
 import json
+import csv
 import nltk
 import random
 from nltk.corpus import stopwords
@@ -62,6 +63,7 @@ def generateArrays():
 			pos.append(tup)
 		else:
 			neg.append(tup)
+
 	for article in testArticlesJson:
 		wordTokens = word_tokenize(article['text'])
 		label = article['label']
@@ -70,16 +72,23 @@ def generateArrays():
 			pos.append(tup)
 		else:
 			neg.append(tup)
+
+	# Return the arrays
 	return pos, neg
 
 def seedAndShuffle(seed, toShuffle):
+
+	#TODO: handle seed or rename to just shuffle
+
 	# Set Random's seed if desired
-	random.seed(seed)
-	print("\nUsing seed: " + str(seed))
+	# random.seed(seed)
+	# print("\nUsing seed: " + str(seed))
 	# Shuffle the articles randomly
 	return random.shuffle(toShuffle)
 
 def setSplit(split, real, fake):
+	# train using split as %
+	split = int(split*len(fake))
 	# Separate lists 
 	trainReal = real[:split]
 	trainFake = fake[:split]
@@ -91,7 +100,6 @@ def setSplit(split, real, fake):
 	test = testReal+testFake
 
 	# Print info on split
-
 	print("\nLength of training set: = {0} real + {1} fake = {2}".format(len(trainReal),len(trainFake),len(train)))
 	print("Length of test set: = {0} real + {1} fake = {2}".format(len(testReal),len(testFake),len(test)) + "\n")
 
@@ -113,11 +121,20 @@ def runSentanal(train, test):
 	trainer = NaiveBayesClassifier.train
 	sentanal.train(trainer, trainList)
 
+	# creates array for storing values
+	values = []
+
 	# display results
 	for key,value in sorted(sentanal.evaluate(testList).items()):
 		print('{0}: {1}'.format(key, value))
+		values.append(value)
 
-def main():
+	# write results to csv
+	with open('Data\\sentanalResults.csv', mode='a') as csvFile:
+		writer = csv.writer(csvFile, delimiter=',')
+		writer.writerow(values)
+
+def mainRunner(seed):
 
 	# real, fake = generateArrays()
 
@@ -127,7 +144,12 @@ def main():
 	seedAndShuffle(9245, real)
 	seedAndShuffle(9245, fake)
 
-	train, test = setSplit(50, real, fake)
+	train, test = setSplit(0.1, real, fake)
+	
 	runSentanal(train, test)
 
-main()
+def main():
+	mainRunner(9245)
+
+for x in range(0, 10):
+	main()
