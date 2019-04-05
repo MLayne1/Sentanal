@@ -59,8 +59,11 @@ def seedAndShuffle(seed, real, fake):
 	# Shuffle the articles randomly
 	return random.shuffle(real), random.shuffle(fake)
 
+
+# NOTE: MAKE DYNAMIC WHERE SPLIT IS %
 # splits training and testing data based on a parameter
 def setSplit(split, real, fake):
+	split = int(split*len(real))
 	# Separate lists 
 	trainReal = real[:split]
 	trainFake = fake[:split]
@@ -101,7 +104,7 @@ def runSentanal(train, test):
 def main():
 	real, fake = generateArrays()
 	seedAndShuffle("sGh43uvCF4eo", real, fake) # Original: 9245
-	train, test = setSplit(30, real, fake)
+	train, test = setSplit(0.1, real, fake)
 	runSentanal(train, test)
 
 main()
