@@ -19,6 +19,7 @@ Authors: Luis Hernandez, Jordan Jefferson, Matthew Layne
 
 # Generates arrays of positive and degative labelled articles
 def generateArrays():
+	# Open files for reading
 	trainFile = open('.\\Data\\jsonFiles\\train.json') 
 	testFile = open('.\\Data\\jsonFiles\\test.json') 
 	trainArticlesJson = json.load(trainFile)
@@ -37,6 +38,7 @@ def generateArrays():
 			pos.append(tup)
 		else:
 			neg.append(tup)
+
 	for article in testArticlesJson:
 		wordTokens = word_tokenize(article['text'])
 		label = article['label']
@@ -45,8 +47,11 @@ def generateArrays():
 			pos.append(tup)
 		else:
 			neg.append(tup)
+
+	# Return the arrays
 	return pos, neg
 
+# Allows user to set seed for shuffle
 def seedAndShuffle(seed, real, fake):
 	# Set Random's seed if desired
 	random.seed(seed)
@@ -54,7 +59,7 @@ def seedAndShuffle(seed, real, fake):
 	# Shuffle the articles randomly
 	return random.shuffle(real), random.shuffle(fake)
 
-
+# splits training and testing data based on a parameter
 def setSplit(split, real, fake):
 	# Separate lists 
 	trainReal = real[:split]
@@ -67,12 +72,12 @@ def setSplit(split, real, fake):
 	test = testReal+testFake
 
 	# Print info on split
-
 	print("\nLength of training set: = {0} real + {1} fake = {2}".format(len(trainReal),len(trainFake),len(train)))
 	print("Length of test set: = {0} real + {1} fake = {2}".format(len(testReal),len(testFake),len(test)) + "\n")
 
 	return train, test
 
+# Runs the NLTK Sentiment Analyzer
 def runSentanal(train, test):
 	sentanal = SentimentAnalyzer()
 
@@ -95,8 +100,8 @@ def runSentanal(train, test):
 
 def main():
 	real, fake = generateArrays()
-	seedAndShuffle(9245, real, fake)
-	train, test = setSplit(50, real, fake)
+	seedAndShuffle("sGh43uvCF4eo", real, fake) # Original: 9245
+	train, test = setSplit(30, real, fake)
 	runSentanal(train, test)
 
 main()
