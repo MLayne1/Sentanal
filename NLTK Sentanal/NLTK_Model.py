@@ -1,6 +1,7 @@
 import os
 import re
 import json
+import csv
 import nltk
 import random
 from nltk.corpus import stopwords
@@ -54,8 +55,8 @@ def generateArrays():
 # Allows user to set seed for shuffle
 def seedAndShuffle(seed, real, fake):
 	# Set Random's seed if desired
-	random.seed(seed)
-	print("\nUsing seed: " + str(seed))
+	# random.seed(seed)
+	# print("\nUsing seed: " + str(seed))
 	# Shuffle the articles randomly
 	return random.shuffle(real), random.shuffle(fake)
 
@@ -97,14 +98,29 @@ def runSentanal(train, test):
 	trainer = NaiveBayesClassifier.train
 	classifier = sentanal.train(trainer, trainList)
 
+	# creates array for storing values
+	values = []
+
 	# display results
 	for key,value in sorted(sentanal.evaluate(testList).items()):
 		print('{0}: {1}'.format(key, value))
+		values.append(value)
 
-def main():
+	# write results to csv
+	with open('Data\\sentanalResults.csv', mode='a') as csvFile:
+		writer = csv.writer(csvFile, delimiter=',')
+		writer.writerow(values)
+
+# Main with seed as parameter
+def mainRunner(seed):
 	real, fake = generateArrays()
-	seedAndShuffle("sGh43uvCF4eo", real, fake) # Original: 9245
+	seedAndShuffle(seed, real, fake) # Original: 9245
 	train, test = setSplit(0.1, real, fake) # first param is % to train with
 	runSentanal(train, test)
 
-main()
+# main without seed parameter
+def main():
+	mainRunner(9245)
+
+for x in range(0, 10):
+	main()
