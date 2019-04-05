@@ -112,19 +112,19 @@ def runSentanal(train, test):
 		writer.writerow(values)
 
 # Main with seed as parameter
-def mainRunner(seed):
+def mainRunner(seed, split):
 	real, fake = generateArrays()
 	seedAndShuffle(seed, real, fake) # Original: 9245
-	train, test = setSplit(0.3, real, fake) # first param is % to train with
+	train, test = setSplit(split, real, fake) # first param is % to train with
 	runSentanal(train, test)
 
 # main without seed parameter
 def main():
-	mainRunner(9245)
+	mainRunner(9245, 0.8)
 
 def generateData(numOfRuns):
 	for x in range(0, numOfRuns):
 	    print("\n\nRunning attempt {0} of {1}".format(x+1, numOfRuns))	
 	    main()
 
-generateData(100)
+generateData(10)
