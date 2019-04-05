@@ -115,7 +115,7 @@ def runSentanal(train, test):
 def mainRunner(seed):
 	real, fake = generateArrays()
 	seedAndShuffle(seed, real, fake) # Original: 9245
-	train, test = setSplit(0.1, real, fake) # first param is % to train with
+	train, test = setSplit(0.3, real, fake) # first param is % to train with
 	runSentanal(train, test)
 
 # main without seed parameter
