@@ -1,3 +1,5 @@
+""" This is a sentiment analysis model using NLTK and a NaiveBayesClassifier classifier """
+
 import os
 import re
 import json
@@ -6,23 +8,44 @@ import random
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem.snowball import EnglishStemmer
-
 from nltk.classify import NaiveBayesClassifier
 from nltk.sentiment import SentimentAnalyzer
-from nltk.sentiment.util import * #mark_negation, extract_unigram_feats, extract_bigram_feats
-from nltk.collocations import * # BigramAssocMeasures
+from nltk.sentiment.util import mark_negation, extract_unigram_feats
+
+__author__ = "Luis Hernandez, Jordan Jefferson, Matthew Layne"
 
 
-"""
-This is a sentiment analyses model using the NLTK classifier
+SRC_TRAIN = '.\\Data\\jsonFiles\\train.json'
+SRC_TEST = '.\\Data\\jsonFiles\\test.json'
 
-Authors: Luis Hernandez, Jordan Jefferson, Matthew Layne
-"""
+SRC_REAL = '.\\Data\\jsonFiles\\jReal.json'
+SRC_FAKE = '.\\Data\\jsonFiles\\jFake.json'
 
-# Generates arrays of positive and degative labelled articles
+def generateTupleList(path):
+	""" Given the source of a JSON file return a List of tuples
+
+	Arguments:
+		path {str} -- the path to the source JSON file
+	Returns:
+		{list} -- the list of tuples in format ([wordTokens], 'label')
+	"""
+	tupleList = []
+
+	with open(path) as jFile:
+		articlesJson = json.load(jFile)
+		print(len(articlesJson))
+	
+	for article in articlesJson:
+		wordTokens = word_tokenize(article['text'])
+		label = article['label']
+		tup = (wordTokens, label)
+		tupleList.append(tup)
+
+	return tupleList
+
 def generateArrays():
-	trainFile = open('.\\Data\\jsonFiles\\train.json') 
-	testFile = open('.\\Data\\jsonFiles\\test.json') 
+	trainFile = open(SRC_TRAIN) 
+	testFile = open(SRC_TEST) 
 	trainArticlesJson = json.load(trainFile)
 	testArticlesJson = json.load(testFile)
 
@@ -49,13 +72,12 @@ def generateArrays():
 			neg.append(tup)
 	return pos, neg
 
-def seedAndShuffle(seed, real, fake):
+def seedAndShuffle(seed, toShuffle):
 	# Set Random's seed if desired
 	random.seed(seed)
 	print("\nUsing seed: " + str(seed))
 	# Shuffle the articles randomly
-	return random.shuffle(real), random.shuffle(fake)
-
+	return random.shuffle(toShuffle)
 
 def setSplit(split, real, fake):
 	# Separate lists 
@@ -89,15 +111,22 @@ def runSentanal(train, test):
 	testList = sentanal.apply_features(test)
 
 	trainer = NaiveBayesClassifier.train
-	classifier = sentanal.train(trainer, trainList)
+	sentanal.train(trainer, trainList)
 
 	# display results
 	for key,value in sorted(sentanal.evaluate(testList).items()):
 		print('{0}: {1}'.format(key, value))
 
 def main():
-	real, fake = generateArrays()
-	seedAndShuffle(9245, real, fake)
+
+	# real, fake = generateArrays()
+
+	real =  generateTupleList(SRC_REAL)
+	fake =  generateTupleList(SRC_FAKE)
+
+	seedAndShuffle(9245, real)
+	seedAndShuffle(9245, fake)
+
 	train, test = setSplit(50, real, fake)
 	runSentanal(train, test)
 

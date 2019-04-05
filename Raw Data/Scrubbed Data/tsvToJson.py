@@ -23,10 +23,14 @@ LBL_REAL = 'pos'
 LBL_FAKE = 'neg'
 
 def clean(toClean):
-    """
-    This function cleans the text before adding it to the JSON.
+    """ This function cleans the text before adding it to the JSON.
     It operates by using regex to remove non-alphabetical charecters
     and extra spcaces, then uses NLTK to remove stop words
+
+    Arguments:
+        toClean {str} -- A string of text to be cleaned
+    Returns:
+        {str} -- A cleaned string of text
     """
 
     stemmer = EnglishStemmer()
@@ -53,14 +57,16 @@ def clean(toClean):
 
     return clean
 
-
 def generateDataFrame(source, label):
+    """Generates pandas DataFrame
+
+    Arguments:
+        source {str} -- path to the source TSV
+        label {str} -- the label for the data
+    Return
+        {DataFrame} -- Pandas DataFrame with text and label
     """
-    Generates pandas DataFrame
-        source: path to the source TSV
-        label: the label for the data
-    """
-    dataFrame = pd.read_csv(source, sep='\t', encoding='utf-8', names=["URL", "Text", "label"], index_col=False)
+    dataFrame = pd.read_csv(source, sep='\t', encoding='utf-8', names=["URL", "text", "label"], index_col=False)
     # Remove URL
     dataFrame = dataFrame.drop(columns="URL")
     # Add label
@@ -72,27 +78,29 @@ def generateDataFrame(source, label):
     return dataFrame
 
 def cleanJson(path):
-    """
-    Clean JSON file destructively (overwrite file)
-        path: path to the JSON file to be cleaned
+    """ Clean JSON file destructively (overwrite file)
+
+    Arguments:
+        path {str} -- path to the JSON file to be cleaned
     """
     with open(path) as jsonFile:
         jsonObj = json.load(jsonFile)
         i = 0
         while i < len(jsonObj):
             # clean text
-            jsonObj[i]['Text'] = clean(jsonObj[i]['Text'])
+            jsonObj[i]['text'] = clean(jsonObj[i]['text'])
             i+=1
     with open(path, 'w') as jsonFile:
         json.dump(jsonObj, jsonFile, indent=4)
 
-
+# generate pandas dataFrames
 jReal = generateDataFrame(SRC_REAL, LBL_REAL)
 jFake = generateDataFrame(SRC_FAKE, LBL_FAKE)
 
-# Create inter
+# create intermediate JSON file
 out1 = jReal.to_json(OUT_REAL, orient='records')
 out2 = jFake.to_json(OUT_FAKE, orient='records')
 
+# clean output
 cleanJson(OUT_REAL)
 cleanJson(OUT_FAKE)
