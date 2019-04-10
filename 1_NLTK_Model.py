@@ -15,17 +15,19 @@ from nltk.sentiment.util import mark_negation, extract_unigram_feats, extract_bi
 
 __author__ = "Luis Hernandez, Jordan Jefferson, Matthew Layne"
 
-
 SRC_TRAIN = '.\\Data\\jsonFiles\\train.json'
 SRC_TEST = '.\\Data\\jsonFiles\\test.json'
-
 # Data scrapped from the internet
 SRC_REAL_SCRAPPED = '.\\Data\\jsonFiles\\jReal.json'
 SRC_FAKE_sCRAPPED = '.\\Data\\jsonFiles\\jFake.json'
-
 # Public Database Horne
 SRC_REAL_PUBLIC = '.\\Data\\jsonFiles\\hRealP.json'
 SRC_FAKE_PUBLIC = '.\\Data\\jsonFiles\\hFakeP.json'
+
+OUTPUT_CSV = 'Data\\csvFiles\\sentanalResults.csv'
+NUM_RUNS = 3
+SPLIT = .3
+SEED = 9245
 
 def generateTupleList(path):
 	""" Given the source of a JSON file return a List of tuples
@@ -102,9 +104,9 @@ def setSplit(split, real, fake):
 
 	# Print info on split
 	print("\n")
-	print("Total records: {0} train + {1} test = {2}".format(len(train),len(test), len(train)+len(test)))
-	print("Length of training set: {0} real + {1} fake = {2}".format(len(trainReal),len(trainFake),len(train)))
-	print("Length of test set: {0} real + {1} fake = {2}".format(len(testReal),len(testFake),len(test)) + "\n")
+	print("Total records: {0} train + {1} test = {2}".format(len(train), len(test), len(train)+len(test)))
+	print("Length of training set: {0} real + {1} fake = {2}".format(len(trainReal), len(trainFake),len(train)))
+	print("Length of test set: {0} real + {1} fake = {2}".format(len(testReal), len(testFake),len(test)) + "\n")
 
 	return train, test
 
@@ -125,7 +127,6 @@ def runSentanal(train, test):
 	classifier = sentanal.train(trainer, trainList)
 	classifier.show_most_informative_features()
 	
-
 	# creates array for storing values
 	values = []
 
@@ -135,7 +136,7 @@ def runSentanal(train, test):
 		values.append(value)
 
 	# write results to csv
-	with open('Data\\sentanalResults.csv', mode='a') as csvFile:
+	with open(OUTPUT_CSV, mode='a') as csvFile:
 		writer = csv.writer(csvFile, delimiter=',')
 		writer.writerow(values)
 	
@@ -153,11 +154,12 @@ def mainRunner(seed, split):
 	runSentanal(train, test)
 
 def main():
-	mainRunner(9245, 0.8)
+	mainRunner(SEED, SPLIT)
 
 def generateData(numOfRuns):
 	for x in range(0, numOfRuns):
 	    print("\n\nRunning attempt {0} of {1}".format(x+1, numOfRuns))	
 	    main()
 
-generateData(10)
+
+generateData(NUM_RUNS)
