@@ -25,9 +25,12 @@ SRC_REAL_PUBLIC = '.\\Data\\jsonFiles\\hRealP.json'
 SRC_FAKE_PUBLIC = '.\\Data\\jsonFiles\\hFakeP.json'
 
 OUTPUT_CSV = 'Data\\csvFiles\\sentanalResults.csv'
-NUM_RUNS = 3
+
+# Arguments
+NUM_RUNS = 10
 SPLIT = .3
 SEED = 9245
+USE_SEED = True
 
 def generateTupleList(path):
 	""" Given the source of a JSON file return a List of tuples
@@ -50,6 +53,8 @@ def generateTupleList(path):
 	return tupleList
 
 def generateArrays():
+	""" Deprecated Function use when getting data from train/test json 
+	instead of real/fake """
 	trainFile = open(SRC_TRAIN) 
 	testFile = open(SRC_TEST) 
 	trainArticlesJson = json.load(trainFile)
@@ -82,10 +87,11 @@ def generateArrays():
 	return pos, neg
 
 def seedAndShuffle(seed, toShuffle):
-	#TODO: handle seed or rename to just shuffle
 	# Set Random's seed if desired
-	random.seed(seed)
-	# print("\nUsing seed: " + str(seed))
+	if (USE_SEED):
+		random.seed(seed)
+		print("Using seed: " + str(seed))
+
 	# Shuffle the articles randomly
 	return random.shuffle(toShuffle)
 
