@@ -12,10 +12,10 @@ from nltk.stem.snowball import EnglishStemmer
 __author__ = "Luis Hernandez, Jordan Jefferson, Matthew Layne"
 
 # paths to labeled data 
-pathTrainFake = '.\\FakeBuzzfeed'
-pathTrainReal = '.\\RealBuzzfeed'
-pathTestFake = '.\\FakeRandom'
-pathTestReal = '.\\RealRandom'
+pathTrainFake = '.\\Data\\textFiles\\FakeBuzzfeed'
+pathTrainReal = '.\\Data\\textFiles\\RealBuzzfeed'
+pathTestFake = '.\\Data\\textFiles\\FakeRandom'
+pathTestReal = '.\\Data\\textFiles\\RealRandom'
 
 # names for output files
 jsonTrain = "train.json"
